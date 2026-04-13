@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Producto {
+  id Int @id @default(autoincrement())
+  nombre String
+  precio Float
+  stock Int
+  createdAt DateTime @default(now())
+
+  ventas VentaItem[]
+}
+
+model Venta {
+  id          Int          @id @default(autoincrement())
+  total       Float
+  fecha       DateTime     @default(now())
+  metodoPago  String
+
+  items       VentaItem[]
+}
+
+model VentaItem {
+  id             Int      @id @default(autoincrement())
+  ventaId        Int
+  productoId     Int
+  cantidad       Int
+  precioUnitario Float
+  subtotal       Float
+
+  venta          Venta    @relation(fields: [ventaId], references: [id])
+  producto       Producto @relation(fields: [productoId], references: [id])
+}
