@@ -1,14 +1,14 @@
+import VentasHoy from "@/components/VentasHoy";
 
 export default function Home() {
   return (
-    <main className="flex flex-col mx-30 py-8">
-      <h1>Bienvenido</h1>
-      <div>
-        <h2>Ventas del dia</h2>
+    <div className="bg-secondary min-h-full p-6">
+      <div className="max-w-7xl mx-auto space-y-6">
+        <h1 className="text-2xl font-bold text-head">
+          Dashboard
+        </h1>
+        <VentasHoy />
       </div>
-      <div>
-        <h2>Ingresos</h2>
-      </div>
-    </main>
+    </div>
   );
 }
