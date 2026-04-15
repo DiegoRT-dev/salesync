@@ -6,6 +6,10 @@ import { useState } from "react";
 export default function Venta({ productos }: any) {
   const [seleccion, setSeleccion] = useState<number | "">("");
   const [formaPago, setFormaPago] = useState<string | "">("efectivo");
+  const [alert, setAlert] = useState<{
+    type: "success" | "error";
+    message: string;
+  } | null>(null);
   const agregar = useCartStore((s) => s.addToCart);
   const items = useCartStore((s) => s.items);
   const increase = useCartStore((s) => s.increaseQuantity);
@@ -19,29 +23,64 @@ export default function Venta({ productos }: any) {
   const handleCobrar = async () => {
     if (items.length === 0) return;
 
-    const res = await fetch("/api/sales", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        items,
-        total,
-        metodoPago: formaPago,
-      }),
-    });
-    if (res.ok) {
-      clearCart();
-      setSeleccion("");
-      setFormaPago("efectivo");
-      console.log("Venta registrada");
-    } else {
-      console.log("Error al cobrar");
+    try {
+      const res = await fetch("/api/sales", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          items,
+          total,
+          metodoPago: formaPago,
+        }),
+      });
+      if (res.ok) {
+        clearCart();
+        setSeleccion("");
+        setFormaPago("efectivo");
+        setAlert({
+          type: "success",
+          message: "Venta registrada correctamente",
+        });
+      } else {
+        setAlert({
+          type: "error",
+          message: "Error al registar la venta",
+        });
+      }
+    } catch (error) {
+      setAlert({
+        type: "error",
+        message: "Error de conexion",
+      });
     }
+
+    setTimeout(() => {
+      setAlert(null);
+    }, 3000);
   };
 
   return (
     <div className="p-6">
+      {alert && (
+        <div className="fixed bottom-5 right-5 z-50">
+          <div
+            className={`px-4 py-3 rounded-lg shadow-lg flex items-center gap-3
+        ${
+          alert.type === "success"
+            ? "bg-success text-white"
+            : "bg-error text-white"
+        }`}
+          >
+            <span>{alert.message}</span>
+
+            <button onClick={() => setAlert(null)} className="ml-2 font-bold">
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
       <div className="grid grid-cols-2 gap-6">
         <div className="bg-primary p-6 rounded-2xl shadow">
           <h2 className="text-xl font-bold text-head mb-4">Productos</h2>
