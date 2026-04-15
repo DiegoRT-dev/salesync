@@ -14,6 +14,8 @@ import {
   PieChart,
   Pie,
 } from "recharts";
+import TablaReciente from "./TablaReciente";
+import TablaHoy from "./TablaHoy";
 
 export default function Estadisticas() {
   const [data, setData] = useState<any>(null);
@@ -39,23 +41,55 @@ export default function Estadisticas() {
     }),
   );
 
-  const ingresosChartData = Object.entries(data.ingresosPorDia).map(([fecha, total]) => ({
-    fecha,
-    total: Number(total),
-  }));
+  const ingresosChartData = Object.entries(data.ingresosPorDia).map(
+    ([fecha, total]) => ({
+      fecha,
+      total: Number(total),
+    }),
+  );
+
+  const hoy = new Date().toISOString().split("T")[0];
+
+  const ventasHoy = data.ventasPorDia[hoy] || 0;
+
+  const ingresosHoy = data.ingresosPorDia[hoy] || 0;
 
   return (
     <div>
       <div className="grid grid-cols-2 gap-4 mb-4">
         <div className="bg-primary p-4 rounded-2xl shadow-md">
-          <p className="text-sm text-tx-secondary">Ventas</p>
+          <p className="text-sm text-tx-secondary">Total de Ventas</p>
           <h2 className="text-2xl font-bold text-head">{data.totalVentas}</h2>
         </div>
         <div className="bg-primary p-4 rounded-2xl shadow-md">
-          <p className="text-sm text-tx-secondary">Ingresos</p>
+          <p className="text-sm text-tx-secondary">Total de Ingresos</p>
           <h2 className="text-2xl font-bold text-head">
             ${data.totalIngresos.toLocaleString()}
           </h2>
+        </div>
+        <div className="bg-primary p-4 rounded-2xl shadow-md">
+          <p className="text-sm text-tx-secondary">Ventas de Hoy</p>
+          <h2 className="text-2xl font-bold text-head">
+            {!ventasHoy ? "No hay ventas hoy" : ventasHoy}
+          </h2>
+        </div>
+        <div className="bg-primary p-4 rounded-2xl shadow-md">
+          <p className="text-sm text-tx-secondary">Ingresos de Hoy</p>
+          <h2 className="text-2xl font-bold text-head">
+            {ingresosHoy === 0
+              ? "No hay ingresos hoy"
+              : `$${ingresosHoy.toLocaleString()}`}
+          </h2>
+        </div>
+      </div>
+
+      <div className="space-y-4 mb-4">
+        <div className="bg-primary p-6 rounded-2xl shadow-md">
+          <TablaHoy />
+        </div>
+
+        <div className="bg-primary p-6 rounded-2xl shadow-md">
+          <TablaReciente />
         </div>
       </div>
 
@@ -91,19 +125,19 @@ export default function Estadisticas() {
             <XAxis dataKey="fecha" />
             <YAxis />
             <Tooltip
-        formatter={(value) => `$${Number(value ?? 0)}`}
-        contentStyle={{
-          borderRadius: "8px",
-          border: "none",
-        }}
-      />
-      <Line
-        type="monotone"
-        dataKey="total"
-        stroke="#10B981"
-        strokeWidth={2}
-        dot={false}
-      />
+              formatter={(value) => `$${Number(value ?? 0)}`}
+              contentStyle={{
+                borderRadius: "8px",
+                border: "none",
+              }}
+            />
+            <Line
+              type="monotone"
+              dataKey="total"
+              stroke="#10B981"
+              strokeWidth={2}
+              dot={false}
+            />
           </LineChart>
         </ResponsiveContainer>
       </div>
@@ -116,7 +150,7 @@ export default function Estadisticas() {
             <XAxis dataKey="nombre" />
             <YAxis />
             <Tooltip />
-            <Bar dataKey="cantidad" fill="#3B82F6" />
+            <Bar dataKey="cantidad" fill="#1E3A8A" />
           </BarChart>
         </ResponsiveContainer>
       </div>
