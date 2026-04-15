@@ -1,9 +1,9 @@
 "use client";
 
 import { useCartStore } from "@/lib/store/cartStore";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function Venta({ productos }: any) {
+export default function Venta() {
   const [seleccion, setSeleccion] = useState<number | "">("");
   const [formaPago, setFormaPago] = useState<string | "">("efectivo");
   const [alert, setAlert] = useState<{
@@ -18,7 +18,24 @@ export default function Venta({ productos }: any) {
   const total = useCartStore((s) => s.getTotal());
   const clearCart = useCartStore((s) => s.clearCart);
 
-  const selectedProduct = productos.find((p: any) => p.id === seleccion);
+  const [productos, setProductos] = useState<any[]>([]);
+
+  useEffect(() => {
+      const fetchProductos = async () => {
+        try {
+          const res = await fetch("/api/productos");
+        const data = await res.json();
+        setProductos(data);
+        } catch(error) {
+          console.error("Error cargando productos", error);
+        }
+        
+      };
+  
+      fetchProductos();
+    }, []);
+
+    const selectedProduct = productos.find((p) => p.id === seleccion);
 
   const handleCobrar = async () => {
     if (items.length === 0) return;
