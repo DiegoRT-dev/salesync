@@ -157,6 +157,14 @@ export default function Estadisticas() {
 
       <div className="bg-primary p-6 rounded-2xl shadow-md mb-4">
         <h2 className="font-bold text-head mb-4">Metodos de pago</h2>
+        <div className="flex items-center gap-2">
+          <div className="w-4 h-4 bg-blue-500"></div>
+          <p>Tarjeta</p>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="w-4 h-4 bg-emerald-500"></div>
+          <p>Efectivo</p>
+        </div>
         <ResponsiveContainer width="100%" height={300}>
           <PieChart>
             <Pie

@@ -81,7 +81,7 @@ export default function Venta({ productos }: any) {
           </div>
         </div>
       )}
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-primary p-6 rounded-2xl shadow">
           <h2 className="text-xl font-bold text-head mb-4">Productos</h2>
           <select
