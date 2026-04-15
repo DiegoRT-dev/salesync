@@ -1,22 +1,26 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+  variable: "--font-sans"
+})
 
 export const metadata: Metadata = {
   title: "SaleSync",
-  description: "Sales and Sync xd",
+  description: "Sistema de gestion de ventas con dashboard interactivo, registro de compras y visualización de metricas en tiempo real.",
+  keywords: [
+    "dashboard",
+    "ventas",
+    "next.js",
+    "prisma",
+    "postgresql",
+    "saas",
+  ],
+  authors: [{ name: "Diego RT" }]
 };
 
 export default function RootLayout({
@@ -27,7 +31,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${inter.variable} h-full antialiased`}
     >
       <body className="h-full bg-secondary overflow-x-hidden">
         <div className="flex flex-col min-h-screen">
