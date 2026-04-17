@@ -1,36 +1,147 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Salesync
 
-## Getting Started
+Sistema de punto de venta (POS) desarrollado con Next.js, enfocado en la gestión de productos, ventas y estadísticas en tiempo real.
 
-First, run the development server:
+## Demo 
+Prueba la aplicación aquí:
+https://salesync-neon.vercel.app/
+
+## Características
+
+- Registro de ventas con carrito dinámico
+- Control de inventario
+- Métodos de pago (efectivo/tarjeta)
+- Estadísticas con gráficas
+- Productos mas vendidos
+- Ventas e ingresos por día
+- Historial de ventas
+- Actualización en tiempo real
+- UI moderna con Tailwind CSS
+
+## Tecnologías
+- Next.js 16
+- React
+- Tailwind CSS
+- Zustand
+- Prisma ORM
+- PostgreSQL (Supabase)
+- Recharts (gráficas)
+
+## Instalación y ejecución local
+
+1. Clona el repositorio
+
+```bash
+git clone https://github.com/DiegoRT-dev/salesync.git
+cd salesync
+```
+
+2. Instala dependencias
+
+```bash
+npm install
+# o
+pnpm install
+# o
+yarn install
+```
+
+3. Configura la base de datos
+
+Crea un archivo .env en la raíz del proyecto con:
+
+```bash
+DATABASE_URL="postgresql://USER:PASSWORD@HOST:PORT/DATABASE"
+```
+
+4. Genera y aplica la base de datos
+
+```bash
+npx prisma generate client
+npx prisma migrate dev
+```
+
+5. Ejecuta la aplicación
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
+# o
 pnpm dev
-# or
-bun dev
+# o
+yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Capturas de pantalla
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Página principal
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+![Pagina Principal](public/screenshots/Home.png)
 
-## Learn More
+Página de Venta
 
-To learn more about Next.js, take a look at the following resources:
+![Pagina Venta](public/screenshots/Venta.png)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Página de Productos
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+![Productos](public/screenshots/Productos.png)
 
-## Deploy on Vercel
+Página de Estadisticas
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+![Estadisticas](public/screenshots/Estadisticas.png)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Funcionalidades principales
+
+Ventas
+- Selección de productos
+- Carrito con cantidades dinámicas
+- Cálculo automático de total
+- Validación de stock en backend
+- Alertas visuales (exito / error)
+
+Productos
+- Lista de productos con stock
+- Prevención de ventas sin inventario
+
+Estadísticas
+- Ventas por día
+- Ingresos por día
+- Productos más vendidos
+- Método de pago más usados
+
+## Estructura del proyecto
+```bash
+/app
+├── /api (/sales /stats /productos /table)
+├── /venta
+├── /estadisticas
+├── /productos
+/lib
+├── prisma.ts
+├── store/
+/components (Estadisticas, Footer, Navbar, ProductList, TablaHoy, TablaReciente, Venta, VentasHoy)
+```
+
+## Deploy
+
+La aplicación está desplegada usando:
+
+- Vercel
+- Supabase (PostgreSQL)
+
+## Mejoras futuras
+
+- Filtros por rango de fechas
+- Alertas de stock bajo
+- Roles
+- Autenticación de usuarios
+
+## Contribuciones
+
+¡Las contribuciones son bienvenidas! Si encuentras un bug o tienes una idea para mejorar la app, abre un issue o un pull request.
+
+## Licencia
+
+MIT License - siéntete libre de usar, modificar y compartir este proyecto.
+Creado por DiegoRT-dev
+
+¡Gracias por visitar!
