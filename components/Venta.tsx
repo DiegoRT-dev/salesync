@@ -110,7 +110,7 @@ export default function Venta() {
             className="w-full border border-gray-300 rounded-lg p-2 mb-3"
           >
             <option value="">Selecciona una opcion</option>
-            {productos.map((p: any) => (
+            {productos.filter((p) => p.stock > 0).map((p: any) => (
               <option key={p.id} value={p.id}>
                 {p.nombre}
               </option>
